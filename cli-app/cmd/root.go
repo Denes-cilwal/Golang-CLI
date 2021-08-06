@@ -16,7 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"cli-app/data"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -28,12 +27,12 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "init ",
-	Short: "initialize new table and database",
-	Long: `initilize new table and database`,
-    Run: func(cmd *cobra.Command, args []string) {
-		data.CreateTable()
-	},
+	Use:   "cli",
+	Short: "use cliapp to learn cobra library",
+	Long: `use cliapp to learn cobra library`,
+    //Run: func(cmd *cobra.Command, args []string) {
+	//	data.CreateTable()
+	//},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
