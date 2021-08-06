@@ -16,7 +16,10 @@ limitations under the License.
 package cmd
 
 import (
+	"errors"
 	"fmt"
+	"github.com/manifoldco/promptui"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -36,4 +39,33 @@ func init() {
 // new is subcommand of note
 	noteCmd.AddCommand(newCmd)
 
+}
+
+type propmtContent  struct {
+	errorMsg string
+	label string
+}
+/*
+prompt input mode:
+validate func
+templates
+prompt
+*/
+func prompGetInput(pc propmtContent) string{
+	validate := func(input string)error {
+		if len(input) <= 0 {
+			return errors.New(pc.errorMsg)
+		}
+		return  nil
+	}
+	prompt := promptui.Prompt{
+		Label:pc.label,
+        Validate:validate,
+	}
+ result , err := prompt.Run()
+ if err!=nil{
+ 	fmt.Printf("prompt failed %v\n", err)
+ 	os.Exit(1)
+ }
+ return  result
 }
