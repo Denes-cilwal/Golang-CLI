@@ -29,6 +29,4 @@ var noteCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(noteCmd)
-
-
 }

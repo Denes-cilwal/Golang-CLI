@@ -16,6 +16,7 @@ limitations under the License.
 package cmd
 
 import (
+	"cli-app/data"
 	"errors"
 	"fmt"
 	"github.com/manifoldco/promptui"
@@ -28,10 +29,10 @@ import (
 // newCmd represents the new command
 var newCmd = &cobra.Command{
 	Use:   "new",
-	Short: "A brief description of your command",
-	Long: ``,
+	Short: "Create a new note",
+	Long: `Create a new note`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("new called")
+		createNewNote()
 	},
 }
 
@@ -41,7 +42,7 @@ func init() {
 
 }
 
-type propmtContent  struct {
+type promptContent  struct {
 	errorMsg string
 	label string
 }
@@ -51,7 +52,7 @@ validate func
 templates
 prompt
 */
-func prompGetInput(pc propmtContent) string{
+func promptGetInput(pc promptContent) string{
 	validate := func(input string)error {
 		if len(input) <= 0 {
 			return errors.New(pc.errorMsg)
@@ -68,4 +69,58 @@ func prompGetInput(pc propmtContent) string{
  	os.Exit(1)
  }
  return  result
+}
+
+func promptGetSelect(pc promptContent) string {
+	items := []string{"Beelx", "Bcom", "BE.civil", "object"}
+	index := -1
+	var result string
+	var err error
+
+	for index < 0 {
+		prompt := promptui.SelectWithAdd{
+			Label:    pc.label,
+			Items:    items,
+			AddLabel: "Other",
+		}
+
+		index, result, err = prompt.Run()
+
+		if index == -1 {
+			items = append(items, result)
+		}
+	}
+
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("Input: %s\n", result)
+
+	return result
+}
+
+func createNewNote() {
+	wordPromptContent := promptContent{
+		"Please provide a word.",
+		"What word would you like to make a note of?",
+	}
+	// capture input from user: promptGetInput
+	word := promptGetInput(wordPromptContent)
+
+	definitionPromptContent := promptContent{
+		"Please provide a definition.",
+		fmt.Sprintf("What is the definition of %s?", word),
+	}
+	definition := promptGetInput(definitionPromptContent)
+	fmt.Sprintf("What is the definition of %s?",definition)
+
+	categoryPromptContent := promptContent{
+		"Please provide a category.",
+		fmt.Sprintf("What category does %s belong to?", word),
+	}
+	category := promptGetSelect(categoryPromptContent)
+
+	data.InsertNote(word, definition, category)
 }
