@@ -33,7 +33,7 @@ func CreateTable()  {
 }
 
 func InsertNote(word string, definition string, category string) {
-	insertNoteSQL := `INSERT INTO studybuddy(word, definition, category) VALUES (?, ?, ?)`
+	insertNoteSQL := `INSERT INTO CLI(word, definition, category) VALUES (?, ?, ?)`
 	statement, err := db.Prepare(insertNoteSQL)
 	if err != nil {
 		log.Fatalln(err)

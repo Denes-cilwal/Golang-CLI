@@ -30,9 +30,7 @@ var rootCmd = &cobra.Command{
 	Use:   "cli",
 	Short: "use cliapp to learn cobra library",
 	Long: `use cliapp to learn cobra library`,
-    //Run: func(cmd *cobra.Command, args []string) {
-	//	data.CreateTable()
-	//},
+
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

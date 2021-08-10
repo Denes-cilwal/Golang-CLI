@@ -72,7 +72,7 @@ func promptGetInput(pc promptContent) string{
 }
 
 func promptGetSelect(pc promptContent) string {
-	items := []string{"Beelx", "Bcom", "BE.civil", "object"}
+	items := []string{"food", "study", "Games", "object"}
 	index := -1
 	var result string
 	var err error
